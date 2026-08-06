@@ -1,44 +1,55 @@
-"use client"
+// Fetching projects from django API
 
-import { useState } from 'react';
-import Link from 'next/link'
-// Task 3
-function DashBoard(){
-    return <div>
-        <Link href="/login">Go to Login Page</Link> 
-    </div>
+async function fetch_data(params) {
+
+    // Using access token
+    const token = localStorage.getItem("access");
+
+    const response = await fetch("http://127.0.0.1:8000/showprojects/", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const projects = await response.json();
+
+    if (response.status == 403) {
+
+        const token = localStorage.getItem("refresh");
+
+        const refreshResponse = await fetch("http://127.0.0.1:8000/refreshtoken", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        const data = await refreshResponse.json();
+
+        localStorage.setItem("access", data.access);
+
+        const newToken = localStorage.getItem("access");
+
+        const response = await fetch("http://127.0.0.1:8000/showprojects/", {
+            headers: {
+                Authorization: `Bearer ${newToken}`,
+            },
+        });
+
+        const projects = await response.json();
+
+        console.log(projects);
+
+    } else {
+
+        console.log(projects);
+
+    }
+
 }
-export default DashBoard;
 
-// task 4
-function ParentComponent(){
-    return <div>
-        <ChildComponent/>
-    </div>
-}
-export default ParentComponent
-
-function ChildComponent(){
-    return <ol>
-        <li>I have practised Front-End Concepts</li>
-        <li>I am learning Next.js</li>
-    </ol>
-}
-export default ChildComponent
-
-// Task 5
-function counter(){
-    const [sidebar,setsidebar]=useState(0);
-    return (
-
-        <div>
-            <button onClick={() => setShowSidebar(!showSidebar)}>
-                Toggle Sidebar
-            </button>
-            {showSidebar && <Sidebar />}
-             </div>
-             );
-}
-export default counter;
+// Show Logged-in User name
+return <>
+<div>
     
-    
+</div>
+</>

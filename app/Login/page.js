@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import handleLogout from "../../components/COMPONENTS.JS";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -25,12 +26,11 @@ function Login() {
 
       if (response.status === 200) {
         console.log("Login Successful");
+      // Storing tokens in local storage to be accessible by other components of code
+        const accessToken = localStorage.setItem("access", data.access);
+        const refreshToken = localStorage.setItem("refresh", data.refresh);
 
-        const accessToken = data.access;
-        const refreshToken = data.refresh;
-
-        console.log(accessToken);
-        console.log(refreshToken);
+       
       }
     } 
   }
@@ -57,3 +57,6 @@ function Login() {
 
 
 export default Login;
+
+// Adding Logout button
+<button onClick={handleLogout}>Logout</button>
