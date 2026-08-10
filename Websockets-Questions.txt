@@ -1,0 +1,17 @@
+Difference between HTTP and Websocket:
+HTTP is a protocol for delievering web pages on the browser. HTTP is a stateless transfer protocol. It means that server treats each request as entirely indepenent .
+
+Web socket connects clients and servers. It differs from HTTP in a way that it allows client to communicate as long as they want on a single linke. Unlike HTTP where every request is brand new, web socket allows to make multiple requests in a single established connection.
+
+
+# Task 3:
+3 Features that need Websockets vs HTTP features:
+Features requiring websockets:
+Real time chat
+Live notifications
+Location tracking.
+
+Features requiring HTTP:
+Login request
+Accessing any resource
+Creating a new data(POST Request)
