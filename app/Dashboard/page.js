@@ -1,55 +1,32 @@
-// Fetching projects from django API
+// Redirecting unauthenticated users
+import { redirect } from 'next/navigation'
+import { auth } from '@/auth' // Example helper from Auth.js / NextAuth
 
-async function fetch_data(params) {
 
-    // Using access token
-    const token = localStorage.getItem("access");
 
-    const response = await fetch("http://127.0.0.1:8000/showprojects/", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
 
-    const projects = await response.json();
+"use client";
 
-    if (response.status == 403) {
+import { useState, useEffect } from "react";
 
-        const token = localStorage.getItem("refresh");
+// Showing logged in User name on Dashboard page
+function Dashboard() {
+  const [username, setUsername] = useState("");
 
-        const refreshResponse = await fetch("http://127.0.0.1:8000/refreshtoken", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+  }, []);
 
-        const data = await refreshResponse.json();
+  
 
-        localStorage.setItem("access", data.access);
+  return (
+    <div>
+      <h1>Welcome, {username}</h1>
 
-        const newToken = localStorage.getItem("access");
-
-        const response = await fetch("http://127.0.0.1:8000/showprojects/", {
-            headers: {
-                Authorization: `Bearer ${newToken}`,
-            },
-        });
-
-        const projects = await response.json();
-
-        console.log(projects);
-
-    } else {
-
-        console.log(projects);
-
-    }
-
+      {}
+    </div>
+  );
 }
 
-// Show Logged-in User name
-return <>
-<div>
-    
-</div>
-</>
+export default Dashboard;

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Client</title>
+</head>
+<body>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:8765");
+
+        socket.onopen = () => {
+            console.log("Connected");
+
+            socket.send("Hello Server");
+        };
+
+        socket.onmessage = (event) => {
+            console.log("Server replied:", event.data);
+        };
+    </script>
+
+</body>
+</html>
