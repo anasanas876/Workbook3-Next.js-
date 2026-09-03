@@ -1,5 +1,16 @@
 "use client";
 
+import link from 'next/link';
+
+ function Dashboard()
+{
+  return(
+    <nav>
+  <link href="/">Go to Dashboard page</link>
+  </nav>)
+}
+
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -7,7 +18,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [error,setError]=useState(false)
   const router = useRouter();
 
   async function handleSubmit(e) {
@@ -33,9 +44,16 @@ function Login() {
 
         localStorage.setItem("access", data.access);
         localStorage.setItem("refresh", data.refresh);
+        localStorage.setItem("username", username);
+        router.push("/Dashboard");}
+      else {
+        alert(data.details)
+        alert("Please Login again")
+        router.push("Login")
 
-        router.push("/Dashboard");
       }
+      
+    
     } finally {
       setLoading(false);
     }
@@ -66,4 +84,6 @@ function Login() {
   );
 }
 
+
 export default Login;
+

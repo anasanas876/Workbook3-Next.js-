@@ -1,0 +1,196 @@
+
+
+.dashboard {
+  min-height: 100vh;
+  background: #f5f6f8;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+
+/* =========================
+   Headings
+========================= */
+
+.dashboard h1 {
+  margin-bottom: 30px;
+}
+
+.dashboard h2 {
+  margin-bottom: 20px;
+}
+
+.dashboard h3 {
+  margin-bottom: 15px;
+}
+
+
+/* =========================
+   Workspace / Room Sections
+========================= */
+
+.dashboard > div {
+  margin-bottom: 25px;
+}
+
+
+/* =========================
+   Cards
+========================= */
+
+.workspace-card,
+.room-card {
+  background: white;
+  border: 1px solid #e2e4e8;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 12px;
+}
+
+
+/* =========================
+   Workspace List
+========================= */
+
+.workspace-list {
+  width: 300px;
+}
+
+
+/* =========================
+   Workspace Buttons
+========================= */
+
+.workspace-card button,
+.room-card button {
+  width: 100%;
+  text-align: left;
+  background: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.workspace-card button:hover,
+.room-card button:hover {
+  background: #f0f4ff;
+}
+
+
+/* =========================
+   Inputs
+========================= */
+
+.dashboard input {
+  padding: 11px 13px;
+  border: 1px solid #d9dce1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  margin-right: 10px;
+}
+
+.dashboard input:focus {
+  border-color: #4f6ef7;
+}
+
+
+/* =========================
+   Main Buttons
+========================= */
+
+.dashboard button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #d9dce1;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dashboard button:hover {
+  background: #f3f5f8;
+}
+
+
+/* =========================
+   Create / Send Buttons
+========================= */
+
+.dashboard input + button {
+  background: #4f6ef7;
+  color: white;
+  border: none;
+}
+
+.dashboard input + button:hover {
+  background: #3f5de0;
+}
+
+
+/* =========================
+   Back Button
+========================= */
+
+.dashboard > div > button:first-child {
+  margin-bottom: 25px;
+}
+
+
+/* =========================
+   Chat Box
+========================= */
+
+.chat-box {
+  background: white;
+  border: 1px solid #e2e4e8;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 700px;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+
+/* =========================
+   Messages
+========================= */
+
+.chat-box p {
+  background: #f0f4ff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 8px 0;
+  width: fit-content;
+  max-width: 80%;
+}
+
+
+/* =========================
+   Chat Input
+========================= */
+
+.chat-input {
+  display: flex;
+  max-width: 700px;
+}
+
+.chat-input input {
+  flex: 1;
+}
+
+
+/* =========================
+   Status Message
+========================= */
+
+.dashboard > p {
+  margin-top: 20px;
+  color: #555;
+}
+

@@ -1,32 +1,26 @@
-// Redirecting unauthenticated users
-import { redirect } from 'next/navigation'
-import { auth } from '@/auth' // Example helper from Auth.js / NextAuth
-
-
-
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-// Showing logged in User name on Dashboard page
-function Dashboard() {
-  const [username, setUsername] = useState("");
+export default function Dashboard() {
+    const router = useRouter();
 
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-  }, []);
+    useEffect(() => {
+        if (!localStorage.getItem("access")) {
+            router.push("/Login");
+        }
+    }, [router]);
 
-  
+    const username = localStorage.getItem("username");
 
-  return (
-    <div>
-      <h1>Welcome, {username}</h1>
-
-      {}
-    </div>
-  );
+    return (
+        <div>
+            <div style={{ paddingTop: "30px", paddingLeft: "30px" }}>
+                <h3>Welcome, {username}</h3>
+            </div>
+        </div>
+    );
 }
 
-export default Dashboard;
