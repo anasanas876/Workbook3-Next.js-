@@ -8,3 +8,5 @@ function DisplayMessages() {
 
 
 }
+
+export default DisplayMessages;

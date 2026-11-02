@@ -1,6 +1,11 @@
+import { useEffect, useState } from "react";
+const[rooms,setrooms]=useState(false)
 async function getRooms() {
 
+
+
     const response = await fetch("http://127.0.0.1:8000/rooms/");
+    setrooms(true)
 
     const rooms = await response.json();
 
@@ -19,8 +24,37 @@ function JoinRoom(room) {
     );
 
     websocket.onopen = () => {
-        return {("Joined:", room.name)};
+        return <div style={{color:"green"}}>
+            `joined${room.name}`
+        </div>
     };
+const [messages, setMessages] = useState([]);
+
+useEffect(() => {
+    async function GetMessages() {
+        const response = await fetch(
+            `http://127.0.0.1:8000/messages/${room.id}`
+        );
+
+        const data = await response.json();
+
+        setMessages(data);
+    }
+
+    GetMessages();
+}, [room.id]);
+{messages.map((message) => (
+    <div key={message.id} style={{ color: "yellow" }}>
+        {message.text} - {message.author}
+    </div>
+))}}
+
+
+
+
+   
+    
+
 
     websocket.onmessage = (event) => {
 

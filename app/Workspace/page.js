@@ -18,6 +18,15 @@ export default function Dashboard() {
   const [message, setMessage] = useState("");
   const [messageStatus, setMessageStatus] = useState("");
   const [socket, setSocket] = useState(null);
+  console.log("DASHBOARD RENDER");
+
+  useEffect(() => {
+    console.log("DASHBOARD MOUNTED");
+
+    return () => {
+      console.log("DASHBOARD UNMOUNTED");
+    };
+  }, []);
 
 
 

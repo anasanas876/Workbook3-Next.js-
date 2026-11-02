@@ -9,9 +9,7 @@
 }
 
 
-/* =========================
-   Headings
-========================= */
+
 
 .dashboard h1 {
   margin-bottom: 30px;
@@ -26,18 +24,11 @@
 }
 
 
-/* =========================
-   Workspace / Room Sections
-========================= */
+
 
 .dashboard > div {
   margin-bottom: 25px;
 }
-
-
-/* =========================
-   Cards
-========================= */
 
 .workspace-card,
 .room-card {
@@ -47,21 +38,9 @@
   padding: 18px;
   margin-bottom: 12px;
 }
-
-
-/* =========================
-   Workspace List
-========================= */
-
 .workspace-list {
   width: 300px;
 }
-
-
-/* =========================
-   Workspace Buttons
-========================= */
-
 .workspace-card button,
 .room-card button {
   width: 100%;
@@ -80,9 +59,6 @@
 }
 
 
-/* =========================
-   Inputs
-========================= */
 
 .dashboard input {
   padding: 11px 13px;
@@ -98,9 +74,6 @@
 }
 
 
-/* =========================
-   Main Buttons
-========================= */
 
 .dashboard button {
   padding: 10px 16px;
@@ -116,9 +89,6 @@
 }
 
 
-/* =========================
-   Create / Send Buttons
-========================= */
 
 .dashboard input + button {
   background: #4f6ef7;
@@ -131,18 +101,12 @@
 }
 
 
-/* =========================
-   Back Button
-========================= */
 
 .dashboard > div > button:first-child {
   margin-bottom: 25px;
 }
 
 
-/* =========================
-   Chat Box
-========================= */
 
 .chat-box {
   background: white;
@@ -157,9 +121,7 @@
 }
 
 
-/* =========================
-   Messages
-========================= */
+
 
 .chat-box p {
   background: #f0f4ff;
@@ -171,9 +133,7 @@
 }
 
 
-/* =========================
-   Chat Input
-========================= */
+
 
 .chat-input {
   display: flex;
@@ -183,11 +143,6 @@
 .chat-input input {
   flex: 1;
 }
-
-
-/* =========================
-   Status Message
-========================= */
 
 .dashboard > p {
   margin-top: 20px;
