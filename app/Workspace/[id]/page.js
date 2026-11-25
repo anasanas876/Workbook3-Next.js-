@@ -35,7 +35,7 @@ export default function WorkspacePage() {
             const access = localStorage.getItem("access");
 
             const response = await fetch(
-                `http://127.0.0.1:8000/showrooms/?workspace=${id}`,
+                `https://workbook2-module2-3.onrender.com/showrooms/?workspace=${id}`,
                 {
                     method: "GET",
                     headers: {

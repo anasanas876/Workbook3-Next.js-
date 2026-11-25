@@ -11,7 +11,7 @@ export default function Notes() {
 
   // Fetch Notes
   async function GetNotes() {
-    const response = await fetch("http://127.0.0.1:8000/notes/", {
+    const response = await fetch("https://workbook2-module2-3.onrender.com/notes/", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("access")}`,
       },
@@ -30,7 +30,7 @@ export default function Notes() {
   
   useEffect(() => {
     const socket = new WebSocket(
-      "ws://127.0.0.1:8000/ws/notes/"
+      "wss://workbook2-module2-3.onrender.com/ws/notes/"
     );
 
     socket.onmessage = (event) => {
@@ -65,7 +65,7 @@ export default function Notes() {
  
   async function UpdateNote() {
     const response = await fetch(
-      `http://127.0.0.1:8000/notes/${selectedNote.id}/`,
+      `https://workbook2-module2-3.onrender.com/notes/${selectedNote.id}/`,
       {
         method: "PUT",
 

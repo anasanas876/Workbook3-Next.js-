@@ -1,6 +1,6 @@
 export default async function Workspace() {
     const response = await fetch(
-        "http://127.0.0.1:8000/workspace/"
+        "https://workbook2-module2-3.onrender.com/workspace/"
     );
 
     const data = await response.json();
@@ -38,7 +38,7 @@ export default async function Workspace() {
                 setError(null);
 
                 const response = await fetch(
-                    "http://127.0.0.1:8000/workspace/"
+                    "https://workbook2-module2-3.onrender.com/workspace/"
                 );
 
                 if (!response.ok) {
@@ -84,7 +84,7 @@ export default async function Workspace() {
             
 
             const response = await fetch(
-                `http://127.0.0.1:8000/shownotes/?workspace=${workspaceId}`
+                `https://workbook2-module2-3.onrender.com/shownotes/?workspace=${workspaceId}`
             );
 
             if (!response.ok) {
@@ -116,7 +116,7 @@ export default async function Workspace() {
 
             // Get the selected notes from Django
             const response = await fetch(
-                `http://127.0.0.1:8000/${noteId}/`
+                `https://workbook2-module2-3.onrender.com/${noteId}/`
             );
 
             if (!response.ok) {

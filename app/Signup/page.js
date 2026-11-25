@@ -18,7 +18,7 @@ export default function Signup() {
   useEffect(() => {
     async function GetCompanies() {
       const response = await fetch(
-        "http://127.0.0.1:8000/showcompanies/"
+        "https://workbook2-module2-3.onrender.com/showcompanies/"
       );
 
       const data = await response.json();
@@ -33,7 +33,7 @@ export default function Signup() {
   // Signup
   async function Signup() {
     const response = await fetch(
-      "http://127.0.0.1:8000/signup/",
+      "https://workbook2-module2-3.onrender.com/signup/",
       {
         method: "POST",
 

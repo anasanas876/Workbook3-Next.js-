@@ -12,7 +12,7 @@ export default function ProjectList() {
         // 1. Get initial access token
         let accessToken = localStorage.getItem("access");
 
-        let response = await fetch(`http://127.0.0.1:8000/projects/`, {
+        let response = await fetch(`https://workbook2-module2-3.onrender.com/projects/`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -22,7 +22,7 @@ export default function ProjectList() {
         if (response.status === 401) {
           const refreshToken = localStorage.getItem("refresh");
           
-          const refreshResponse = await fetch("http://127.0.0.1:8000/refreshtoken", {
+          const refreshResponse = await fetch("https://workbook2-module2-3.onrender.com/refreshtoken", {
             method: "POST", 
             headers: {
               "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export default function ProjectList() {
             accessToken = refreshData.access;
 
             // Retry the original request with the new token
-            response = await fetch("http://127.0.0.1:8000/projects/", {
+            response = await fetch("https://workbook2-module2-3.onrender.com/projects/", {
               headers: {
                 Authorization: `Bearer ${accessToken}`,
               },

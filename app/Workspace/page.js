@@ -53,7 +53,7 @@ export default function WorkspacesComponent() {
     setLoading(true);
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/showworkspaces/",
+        "https://workbook2-module2-3.onrender.com/showworkspaces/",
         {
           method: "GET",
           headers: {
@@ -132,7 +132,7 @@ export default function WorkspacesComponent() {
   {/*async function CreateWorkSpace() {
 
     const response = await fetch(
-      "http://127.0.0.1:8000/createworkspaces/",
+      "https://workbook2-module2-3.onrender.com/createworkspaces/",
       {
         method: "POST",
 
@@ -222,7 +222,7 @@ export default function WorkspacesComponent() {
     }
 
     const response = await fetch(
-      "http://127.0.0.1:8000/createroom/",
+      "https://workbook2-module2-3.onrender.com/createroom/",
       {
         method: "POST",
 
@@ -266,7 +266,7 @@ export default function WorkspacesComponent() {
   async function GetChatRooms(workspaceId) {
 
     const response = await fetch(
-      `http://127.0.0.1:8000/showrooms/?workspace=${workspaceId}`,
+      `https://workbook2-module2-3.onrender.com/showrooms/?workspace=${workspaceId}`,
       {
         method: "GET",
 
@@ -304,7 +304,7 @@ export default function WorkspacesComponent() {
 
     
     const newSocket = new WebSocket(
-      `ws://127.0.0.1:8000/ws/chat/${room.id}/`
+      `wss://workbook2-module2-3.onrender.com/ws/chat/${room.id}/`
     );
 
 

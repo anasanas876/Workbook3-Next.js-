@@ -41,7 +41,7 @@ export default function Dashboard() {
 
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/showworkspaces/",
+                    "https://workbook2-module2-3.onrender.com/showworkspaces/",
                     {
                         method: "GET",
                         headers: {

@@ -20,7 +20,7 @@ export default function Notes({ roomId, initialNotes = [] }) {
       const token = localStorage.getItem("access");
       // Change to your original WebSocket URL
       ws = new WebSocket(
-        `ws://127.0.0.1:8000/ws/rooms/${roomId}/notes/?token=${token}`
+        `wss://workbook2-module2-3.onrender.com/ws/rooms/${roomId}/notes/?token=${token}`
       );
       wsRef.current = ws;
 
