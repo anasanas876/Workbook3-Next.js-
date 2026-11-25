@@ -1,0 +1,82 @@
+/* Room.module.css  (uses the variables from globals.css) */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.title {
+  margin: 0 0 20px;
+  font-size: 1.75rem;
+}
+
+/* ---------- Two columns: messages | notes ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* each column is a card with a fixed height that scrolls inside */
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 140px);
+  min-height: 420px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.panelTitle {
+  margin: 0;
+  padding: 14px 18px;
+  font-size: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Messages ---------- */
+.messageList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 85%;
+  padding: 8px 12px;
+  background: var(--paper);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.sender {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.empty {
+  margin: auto;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .panel {
+    height: 60vh;
+  }
+}

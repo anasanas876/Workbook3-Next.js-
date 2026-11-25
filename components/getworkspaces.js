@@ -1,8 +1,20 @@
-"use client";
+export default async function Workspace() {
+    const response = await fetch(
+        "http://127.0.0.1:8000/workspace/"
+    );
 
-import { useEffect, useState } from "react";
+    const data = await response.json();
 
-export default function Workspace() {
+    return (
+        <ul>
+            {data.map((workspace) => (
+                <li key={workspace.id}>
+                    {workspace.title}
+                </li>
+            ))}
+        </ul>
+    );
+}
 
  
 
@@ -187,18 +199,4 @@ export default function Workspace() {
 
                 </div>
     
-    // Function for version History
-    function VersionHistory(){
-        const notes={
-            Content:note.content, title:note.title
-        }
-        const version=await fetch("http://127.0.0.1:8000/savehistory",{
-            method:"POST",
-            headers:{
-                'content-type':'application/json'}
-            }
-            body:JSON.stringify(notes)
-        }
-        
-
-    }
+    

@@ -1,5 +1,8 @@
 "use client";
 
+
+import styles from "./Signup.module.css"
+
 import { useState, useEffect } from "react";
 
 export default function Signup() {
@@ -19,7 +22,7 @@ export default function Signup() {
       );
 
       const data = await response.json();
-      console.log(data);
+      
 
       setCompanies(data.data);
     }
@@ -50,7 +53,7 @@ export default function Signup() {
 
     const data = await response.json();
 
-    console.log(data);
+    {/*console.log(data);*/}
 
     if (response.ok) {
       setMessage("Signup successful!");
@@ -62,38 +65,41 @@ export default function Signup() {
   }
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className={styles.page}>
+    <div className={styles.card}>
+      <h1 className={styles.title}>Signup</h1>
+      <p className={styles.subtitle}>Sign Up  to Real Time Collaboration Platform</p>
+      
 
-      <input
+      <input className={styles.input}
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
 
-      <input
+      <input className={styles.input}
         type="email"
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
-      <input
+      <input className={styles.input}
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <input
-        type="text"
-        placeholder="Role"
-        value={role}
-        onChange={(e) => setRole(e.target.value)}
-      />
+      <input className={styles.input}
+  
+  type="text"
+  value="employee"
+  readOnly
+/>
 
-      <select
+      <select className={styles.input}
         value={company}
         onChange={(e) => setCompany(e.target.value)}
       >
@@ -101,16 +107,17 @@ export default function Signup() {
 
         {companies.map((company) => (
           <option key={company.id} value={company.id}>
-            {company.name}
+            {company.company_name}
           </option>
         ))}
       </select>
 
-      <button onClick={Signup}>
+      <button className={styles.button} onClick={Signup}>
         Signup
       </button>
 
       <p>{message}</p>
+    </div>
     </div>
   );
 }

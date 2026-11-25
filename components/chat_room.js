@@ -1,69 +1,64 @@
-import { useEffect, useState } from "react";
-const[rooms,setrooms]=useState(false)
-async function getRooms() {
+"use client";
+import styles from "./Notes.module.css";
 
+import { useState } from "react";
 
+export default function CreateRoom({ id, token, onRoomCreated }) {
+    const [roomName, setRoomName] = useState("");
 
-    const response = await fetch("http://127.0.0.1:8000/rooms/");
-    setrooms(true)
+    async function createChatRoom() {
+        if (!roomName.trim()) {
+            alert("Please enter a room name");
+            return;
+        }
 
-    const rooms = await response.json();
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/createroom/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        room_name: roomName,
+                        workspace: id
+                    })
+                }
+            );
 
-    rooms.forEach(room => {
-        return room.name
+            const data = await response.json();
 
-        
-    });
-}
+            if (response.ok) {
+                alert("Room created successfully");
+                setRoomName("");
 
+                if (onRoomCreated) {
+                    onRoomCreated();
+                }
+            } else {
+                alert(JSON.stringify(data));
+            }
 
-function JoinRoom(room) {
-
-    const websocket = new WebSocket(
-        `ws://127.0.0.1:8000/ws/chat/${room.id}/`
-    );
-
-    websocket.onopen = () => {
-        return <div style={{color:"green"}}>
-            `joined${room.name}`
-        </div>
-    };
-const [messages, setMessages] = useState([]);
-
-useEffect(() => {
-    async function GetMessages() {
-        const response = await fetch(
-            `http://127.0.0.1:8000/messages/${room.id}`
-        );
-
-        const data = await response.json();
-
-        setMessages(data);
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong");
+        }
     }
+return (
+  <div className={styles.container}>
+    <input
+      type="text"
+      placeholder="Enter room name"
+      value={roomName}
+      onChange={(e) => setRoomName(e.target.value)}
+      className={styles.input}
+    />
 
-    GetMessages();
-}, [room.id]);
-{messages.map((message) => (
-    <div key={message.id} style={{ color: "yellow" }}>
-        {message.text} - {message.author}
-    </div>
-))}}
-
-
-
-
-   
-    
-
-
-    websocket.onmessage = (event) => {
-
-        const response = JSON.parse(event.data);
-
-        return {(response)};
-    };
-
-    websocket.onclose = () => {
-        console.log(room.name);
-    };
+    <button className={styles.button} onClick={createChatRoom}>
+      Create Room
+    </button>
+  </div>
+);
 }

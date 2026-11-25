@@ -1,55 +1,87 @@
-// Fetching projects from django API
+"use client";
+import { useState, useEffect } from "react";
 
-async function fetch_data(params) {
+export default function ProjectList() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Using access token
-    const token = localStorage.getItem("access");
+  useEffect(() => {
+    async function FetchData(accessToken,company_id) {
+      try {
+        // 1. Get initial access token
+        let accessToken = localStorage.getItem("access");
 
-    const response = await fetch("http://127.0.0.1:8000/showprojects/", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    const projects = await response.json();
-
-    if (response.status == 403) {
-
-        const token = localStorage.getItem("refresh");
-
-        const refreshResponse = await fetch("http://127.0.0.1:8000/refreshtoken", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
+        let response = await fetch(`http://127.0.0.1:8000/projects/`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
 
-        const data = await refreshResponse.json();
-
-        localStorage.setItem("access", data.access);
-
-        const newToken = localStorage.getItem("access");
-
-        const response = await fetch("http://127.0.0.1:8000/showprojects/", {
+        
+        if (response.status === 401) {
+          const refreshToken = localStorage.getItem("refresh");
+          
+          const refreshResponse = await fetch("http://127.0.0.1:8000/refreshtoken", {
+            method: "POST", 
             headers: {
-                Authorization: `Bearer ${newToken}`,
+              "Content-Type": "application/json",
             },
-        });
+            body: JSON.stringify({ refresh: refreshToken }),
+          });
 
-        const projects = await response.json();
+          if (response.status===403){
+            alert("Unauthorized Request")
+          }
 
-        console.log(projects);
+          if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            localStorage.setItem("access", refreshData.access);
+            accessToken = refreshData.access;
 
-    } else {
+            // Retry the original request with the new token
+            response = await fetch("http://127.0.0.1:8000/projects/", {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            });
+          } else {
+            throw new Error("Session expired. Please log in again.");
+          }
+        }
 
-        console.log(projects);
+        // 3. Parse and set data
+        if (!response.ok) {
+          throw new Error("Failed to fetch projects");
+        }
 
+        const result = await response.json();
+        // Adjust 'result.data' or 'result' depending on your Django API structure
+        setProjects(result.data || result); 
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     }
 
-}
+    FetchData();
+  }, []);
 
-// Show Logged-in User name
-return <>
-<div>
-    
-</div>
-</>
+  if (loading) return <div>Loading projects...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      {projects.length === 0 ? (
+        <p>No projects found.</p>
+      ) : (
+        projects.map((project) => (
+          <div key={project.id}>
+            <h1>{project.title}</h1>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}

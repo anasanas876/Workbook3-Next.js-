@@ -1,14 +1,21 @@
 "use client";
+import { useRouter } from "next/router";
 import "./dashboard.css";
+
+import styles from "../../../../components/Notes.module.css";
+
 
 import { useEffect, useState } from "react";
 
-export default function Dashboard() {
+
+
+function Dashboard() {
 
   // Defining States for Workspace Features
   const [workspacename, setworkspacename] = useState("");
   const [workspaces, setWorkspaces] = useState([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState(null);
+  const [loading,setloading]=useState(false)
 
   
   const [roomname, setroomname] = useState("");
@@ -26,46 +33,103 @@ export default function Dashboard() {
     return () => {
       console.log("DASHBOARD UNMOUNTED");
     };
-  }, []);
+  }, []);}
 
 
 
+async function handleWorkspaceClick(id) {
+ 
+ router.push(`/Workspace/${id}`);
+}
 
-  async function ShowWorkspaces() {
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/showworkspaces/",
-      {
-        method: "GET",
 
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("access")}`
+export default function WorkspacesComponent() {
+  const [workspaces, setWorkspaces] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  
+  const fetchWorkspaces = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8000/showworkspaces/",
+        {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("access")}`
+          }
         }
-      }
-    );
-
-    const data = await response.json();
-
-    console.log(data);
-
-    if (response.ok) {
-      setWorkspaces(data.data);
+      );
+      const data = await response.json();
+      setWorkspaces(data.data || []);
+    } catch (error) {
+      console.error("Failed to fetch workspaces:", error);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-
-  
-
+  // Fetch data on initial mount
   useEffect(() => {
-
-    ShowWorkspaces();
-
+    fetchWorkspaces();
   }, []);
 
+  return (
+
+
+    
+  <div>
+    <div>
+      <div className={styles.title}>
+      
+      <h1>
+        My Workspaces
+      </h1>
+      </div>
+
+      {loading && (
+        <p>Loading workspaces...</p>
+      )}
+
+      {!loading && workspaces.length === 0 && (
+        <p className="text-gray-500">No workspaces available.</p>
+      )}
+
+      <div className="flex flex-col gap-4">
+        {workspaces.map((workspace, index) => (
+          <div
+            key={workspace.id}
+            onClick={() => handleWorkspaceClick(workspace.id)}
+            
+              
+                
+                
+              
+            
+          >
+            <div className={styles.workspace}>
+            <h2>
+              {workspace.title || workspace.name || "Untitled Workspace"}
+            </h2>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+);}
+  
 
   
 
-  async function CreateWorkSpace() {
+ 
+
+
+
+  
+
+  {/*async function CreateWorkSpace() {
 
     const response = await fetch(
       "http://127.0.0.1:8000/createworkspaces/",
@@ -569,3 +633,4 @@ return (
 
 );
 }
+*/}

@@ -1,106 +1,121 @@
-"use client";
 
+//import getWorkspaces from '@/components/getWorkspaces';
+
+"use client";
+import styles from "@/components/Notes.module.css"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { access } from "fs";
+
+
+
+
+
+
+
+
+
 
 export default function Dashboard() {
+
     const router = useRouter();
 
     const [username, setUsername] = useState("");
+    const [workspaces, setWorkspaces] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+
         const access = localStorage.getItem("access");
         const name = localStorage.getItem("username");
 
         if (!access) {
             router.push("/Login");
-        } else {
-            setUsername(name || "");
+            return;
         }
-    }, [router]);
 
-    return (
-        <div>
-            <div style={{ paddingTop: "30px", paddingLeft: "30px" }}>
-                <h3>Welcome, {username}</h3>
-            </div>
+        setUsername(name || "");
 
-            <ShowProjects />
-        </div>
-    );
-}
+        async function fetchWorkspaces() {
 
-function ShowProjects() {
-    const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        async function FetchProjects() {
             setLoading(true);
 
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/showprojects",
+                    "http://127.0.0.1:8000/showworkspaces/",
                     {
-                        method:"GET",
-                        headers:{
-                            "Authorization": `Bearer${access}`,
-                            "Content-Type": "application/json"
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${access}`
                         }
                     }
-                    
                 );
 
+                const data = await response.json();
+
                 if (response.ok) {
-                    const data = await response.json();
-                    setProjects(data);
-                } else {
-                    setProjects([]);
+                    setWorkspaces(data.data || []);
                 }
+
             } catch (error) {
-                console.error("Error fetching projects:", error);
-                setProjects([]);
+                console.error(error);
             } finally {
                 setLoading(false);
             }
         }
 
-        FetchProjects();
-    }, []);
+        fetchWorkspaces();
 
-    if (loading) {
-        return <p>Loading projects...</p>;
-    }
+    }, [router]);
 
-    if (projects.length === 0) {
-        return <p>No projects found.</p>;
+    function handleWorkspaceClick(id) {
+        router.push(`/Workspace/${id}`);
     }
 
     return (
         <div>
-            <h3>Projects List</h3>
+            <div className={styles.title}>
+            <h3>
+                Welcome, {username}
+            </h3>
+            </div>
 
-            {projects.map((project) => (
-                <div key={project.id}>
-                    <p>{project.name}</p>
+            <div>
+                <div className={styles.subtitle}>
+
+                <h1>
+
+                    My Workspaces
+                </h1>
                 </div>
-            ))}
+
+                {loading && <p>Loading workspaces...</p>}
+
+                {!loading && workspaces.length === 0 && (
+                    <p>No workspaces available.</p>
+                )}
+
+                
+                <div className={styles.workspaceList}>
+                {workspaces.map((workspace, index) => (
+                
+                <div
+                key={workspace.id}
+                onClick={() => handleWorkspaceClick(workspace.id)}
+                className={`${styles.workspaceCard} ${styles[`color${index % 5}`]}`}
+    >
+                <h2 className={styles.workspaceName}>
+                {workspace.title || workspace.name}
+                </h2>
+                </div>
+                 
+                 
+                 ))}
+                </div>
+            </div>
+
         </div>
     );
 }
+  
 
-<div>
-    <div style={{ paddingTop: 20, position: "absolute", top: 20, right: 20 }}>
-        <button
-            style={{ color: "red" }}
-            onClick={() => {
-                localStorage.removeItem("access");
-                localStorage.removeItem("username");
-                router.push("/login");
-            }}
-        >
-            LogOut
-        </button>
-    </div>
-</div>
+
