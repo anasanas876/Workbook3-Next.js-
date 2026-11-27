@@ -27,15 +27,19 @@ export default function Notes({ roomId, initialNotes = [] }) {
       ws.onopen = () => setConnected(true);
 
       ws.onmessage = (e) => {
-        const { event, note } = JSON.parse(e.data);
-        if (event === "created") {
-          setNotes((prev) =>
-            prev.some((n) => n.id === note.id) ? prev : [...prev, note]
-          );
-        } else if (event === "updated") {
-          setNotes((prev) => prev.map((n) => (n.id === note.id ? note : n)));
-        }
-      };
+  console.log("RAW WS DATA:", e.data);
+  const parsed = JSON.parse(e.data);
+  console.log("PARSED:", parsed);
+  const { event, note } = parsed;
+  if (event === "created") {
+    setNotes((prev) =>
+      prev.some((n) => n.id === note.id) ? prev : [...prev, note]
+    );
+  } else if (event === "updated") {
+    setNotes((prev) => prev.map((n) => (n.id === note.id ? note : n)));
+  }
+};
+
 
       ws.onclose = () => {
         setConnected(false);
